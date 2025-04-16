@@ -39,9 +39,9 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
     };
   }, []);
 
-  return <WebSocketContext.Provider value>{{ data, wsClient }}>
+  return <WebSocketContext.Provider value={{ data, wsClient }}>
     {children}
-  </WebSocketContext.Provider>;
+  </WebSocketContext.Provider>
 }
 
 export const useWebSocket = () => useContext(WebSocketContext);
