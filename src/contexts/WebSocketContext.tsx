@@ -20,7 +20,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
   const [wsClient, setWsClient] = useState<WebSocketClient | null>(null);
 
   useEffect(() => {
-    const client = new WebSocketClient('ws://localhost:9003');
+    const client = new WebSocketClient('ws://localhost:9004');
 
     client.onMessage((message) => {
       console.log('Received:', message);
