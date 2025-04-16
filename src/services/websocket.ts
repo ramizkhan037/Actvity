@@ -23,8 +23,10 @@ class WebSocketClient {
         this.ws.onerror = (error) => {
           if (this.ws) {
             //Check that the error object exists before logging it to the console
-            if(error){
+            if(error && Object.keys(error).length){
               console.error('WebSocket error:', error);
+            } else {
+              console.error('WebSocket error: An unknown WebSocket error occurred.');
             }
           }
         };
