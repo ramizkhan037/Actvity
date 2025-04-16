@@ -21,7 +21,9 @@ class WebSocketClient {
         };
 
         this.ws.onerror = (error) => {
-          console.error('WebSocket error:', error);
+          if (this.ws) {
+            console.error('WebSocket error:', error);
+          }
         };
       } catch (error) {
         console.error('Failed to initialize WebSocket:', error);
