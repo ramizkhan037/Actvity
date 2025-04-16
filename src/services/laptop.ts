@@ -1,57 +1,36 @@
 /**
- * Represents the status of a laptop.
+ * Represents information about a laptop.
  */
-export interface LaptopStatus {
-  /**
-   * The unique identifier of the laptop.
-   */
+export interface LaptopInformation {
   id: string;
-  /**
-   * The current status of the laptop (e.g., online, offline).
-   */
-  status: 'online' | 'offline';
-}
-
-/**
- * Asynchronously retrieves the status of a laptop.
- *
- * @param id The ID of the laptop.
- * @returns A promise that resolves to a LaptopStatus object.
- */
-export async function getLaptopStatus(id: string): Promise<LaptopStatus> {
-  // TODO: Implement this by calling an API.
-  return {
-    id: id,
-    status: 'online',
-  };
-}
-
-
-/**
- * Represents an application running on a laptop.
- */
-export interface Application {
-  /**
-   * The name of the application.
-   */
   name: string;
-  /**
-   * The timestamp of the activity.
-   */
-  timestamp: string;
+  lastSeen: Date;
+  cpuUsage: number;
+  memoryUsage: number;
 }
-
-/**
- * Asynchronously retrieves the currently running application on a laptop.
- *
- * @param id The ID of the laptop.
- * @returns A promise that resolves to the name of the current application.
- */
-export async function getActiveApplication(id: string): Promise<Application> {
-  // TODO: Implement this by calling an API.
-  return {
-    name: 'VSCode',
-    timestamp: new Date().toISOString(),
-  };
+export class LaptopService {
+  static getLaptops() {
+      throw new Error('Method not implemented.');
+  }
+  async getLaptops(): Promise<LaptopInformation[]> {
+    // Placeholder for fetching laptop data from an API or database
+    // Replace with actual data retrieval logic
+    return [
+      {
+        id: "1",
+        name: "Laptop 1",
+        lastSeen: new Date(),
+        cpuUsage: 0.5,
+        memoryUsage: 0.7,
+      },
+      {
+        id: "2",
+        name: "Laptop 2",
+        lastSeen: new Date(),
+        cpuUsage: 0.2,
+        memoryUsage: 0.3,
+      },
+    ];
+  }
 }
 
