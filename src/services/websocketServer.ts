@@ -1,6 +1,6 @@
 // src/services/websocketServer.ts
 import { WebSocketServer, WebSocket } from 'ws';
-import { LaptopInformation } from './laptop';
+import { LaptopInformation, LaptopService } from './laptop';
 
 class WebSocketServerClass {
   private wss: WebSocketServer;
@@ -9,7 +9,7 @@ class WebSocketServerClass {
     this.wss = new WebSocketServer({ noServer: true });
   }
 
-  start(server: any, getLaptops: () => Promise<LaptopInformation[]>): void {
+  start(server: any, p0: () => Promise<LaptopInformation[]>): void {
       server.on('upgrade', (request: any, socket: any, head: any) => {
           this.wss.handleUpgrade(request, socket, head, (ws) => {
             this.wss.emit('connection', ws, request);
@@ -29,20 +29,23 @@ class WebSocketServerClass {
       });
 
       const interval = setInterval(async () => {
-        const laptops: LaptopInformation[] = await getLaptops();
+        const laptopService = new LaptopService();
+        const laptops: LaptopInformation[] = await laptopService.getLaptops();
         this.broadcastMessage(JSON.stringify(laptops));
       }, 5000);
 
       server.on('close', () => this.closeAllIntervals(interval));
   }
   
-    broadcastMessage(message: string): void {
-        this.wss.clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(message);
-            }
-        });
-    }
+  broadcastMessage(message: string): void {
+    this.wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        try {
+          client.send(message);
+        } catch (error) {console.error("Error sending message to client:", error)}
+      }
+    });
+  }
   
     closeAllIntervals(interval: NodeJS.Timeout): void {
         clearInterval(interval);
