@@ -2,7 +2,7 @@
 import { WebSocketServerClass } from './src/services/websocketServer';
 import { LaptopService } from './src/services/laptop';
 
-const PORT = 8080;
+const PORT = 9002;
 
 const server = require('http').createServer();
 const webSocketServer = new WebSocketServerClass();
