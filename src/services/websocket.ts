@@ -4,27 +4,31 @@ class WebSocketClient {
   constructor() {
     if (typeof window !== 'undefined') {
       // This code will only run in the browser
-      this.ws = new WebSocket('ws://localhost:8080');
-      this.ws.onopen = () => {
-        console.log('Connected to WebSocket server');
-      };
-  
-      this.ws.onmessage = (event) => {
-        if (this.onMessageCallback) {
-          this.onMessageCallback(String(event.data));
-        }
-      };
-  
-      this.ws.onclose = () => {
-        console.log('Disconnected from WebSocket server');
-      };
-  
-      this.ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
+      try {
+        this.ws = new WebSocket('ws://localhost:8080');
+        this.ws.onopen = () => {
+          console.log('Connected to WebSocket server');
+        };
+
+        this.ws.onmessage = (event) => {
+          if (this.onMessageCallback) {
+            this.onMessageCallback(String(event.data));
+          }
+        };
+
+        this.ws.onclose = () => {
+          console.log('Disconnected from WebSocket server');
+        };
+
+        this.ws.onerror = (error) => {
+          console.error('WebSocket error:', error);
+        };
+      } catch (error) {
+        console.error('Failed to initialize WebSocket:', error);
+      }
     }
   }
-  
+
 
   connect(p0: string): void {
     // Connection is handled in the constructor
