@@ -6,7 +6,7 @@ const PORT = 9003;
 
 const server = require('http').createServer();
 const webSocketServer = new WebSocketServerClass();
-
+  
 webSocketServer.start(server, () => new LaptopService().getLaptops());
 
 setInterval(async () => {
