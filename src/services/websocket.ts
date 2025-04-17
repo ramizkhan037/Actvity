@@ -32,11 +32,11 @@ class WebSocketClient {
         console.log('Disconnected from WebSocket server');
       };
 
-      this.ws.onerror = (error) => {
-        if (this.ws) {
+      this.ws.onerror = (event) => {
+        if (this.ws && event instanceof ErrorEvent) {
           //Check that the error object exists before logging it to the console
-          if(error){
-            console.error('WebSocket error:', error);
+          if(event.error){
+            console.error('WebSocket error:', event.error);
           }
         }
         // Avoid trying to stringify the entire object with circular references
