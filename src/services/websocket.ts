@@ -1,7 +1,7 @@
 class WebSocketClient {
   private ws: WebSocket | null = null;
   private onMessageCallback: ((message: string) => void) | null = null;
-  private url: string = 'ws://localhost:9002'; // Update to match your server port
+  private url: string = 'ws://localhost:9004'; // Update to match your server port
 
   constructor(url?: string) {
     if (url) {
@@ -32,8 +32,13 @@ class WebSocketClient {
         console.log('Disconnected from WebSocket server');
       };
 
-      this.ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
+      this.ws.onerror = (event) => {
+        if (this.ws && event instanceof ErrorEvent) {
+          //Check that the error object exists before logging it to the console
+          if(event.error){
+            console.error('WebSocket error:', event.error);
+          }
+        }
         // Avoid trying to stringify the entire object with circular references
       };
     } catch (error) {
